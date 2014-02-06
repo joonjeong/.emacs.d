@@ -28,15 +28,15 @@
   (ecb-layout-define "development" 
       left-right "for Development"
       (ecb-set-directories-buffer)
-      (ecb-split-ver 0.3)
-      (ecb-set-sources-buffer)
       (ecb-split-ver 0.5)
-      (ecb-set-history-buffer)
+      (ecb-set-sources-buffer)
+      ;(ecb-split-ver 0.5)
+      ;(ecb-set-history-buffer)
       (select-window (next-window (next-window)))
       (ecb-set-methods-buffer)
       (ecb-split-ver 0.3)
-      ;(ecb-set-speedbar-buffer)
-      (ecb-set-analyse-buffer)
+      (ecb-set-speedbar-buffer)
+      ;(ecb-set-analyse-buffer)
       ;(ecb-set-symboldef-buffer)
       (select-window (previous-window (selected-window) 0)))
   
@@ -44,7 +44,7 @@
    '(ecb-layout-name "development")
    '(ecb-options-version "2.40")
    '(ecb-tip-of-the-day nil)
-   '(ecb-windows-width 0.15))
+   '(ecb-windows-width 0.16))
   (custom-set-faces)
   
   (global-set-key (kbd "C-x p") 'previous-multiframe-window)
