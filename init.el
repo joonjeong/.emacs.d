@@ -25,16 +25,29 @@
   (package-initialize))
 
 (when (require 'ecb nil 'noerror)
-  (ecb-layout-define
-      "development" left nil
-      (ecb-set-methods-buffer)
-      (ecb-split-ver 0.75 t)
-      (other-window 1)
+  (ecb-layout-define "development" 
+      left-right "for Development"
+      (ecb-set-directories-buffer)
+      (ecb-split-ver 0.3)
+      (ecb-set-sources-buffer)
+      (ecb-split-ver 0.5)
       (ecb-set-history-buffer)
-      (select-window (next-window)))
-
+      (select-window (next-window (next-window)))
+      (ecb-set-methods-buffer)
+      (ecb-split-ver 0.3)
+      ;(ecb-set-speedbar-buffer)
+      (ecb-set-analyse-buffer)
+      ;(ecb-set-symboldef-buffer)
+      (select-window (previous-window (selected-window) 0)))
+  
   (custom-set-variables
    '(ecb-layout-name "development")
-   '(ecb-options-version "2.40"))
+   '(ecb-options-version "2.40")
+   '(ecb-tip-of-the-day nil)
+   '(ecb-windows-width 0.15))
   (custom-set-faces)
+  
+  (global-set-key (kbd "C-x p") 'previous-multiframe-window)
+  (global-set-key (kbd "C-x o") 'next-multiframe-window)
+
   (ecb-activate))
