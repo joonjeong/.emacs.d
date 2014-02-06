@@ -5,13 +5,13 @@
 (global-hl-line-mode t)
 (which-function-mode) 
 (ido-mode t)
- 
-(setq package-archives 
+
+(when (require 'package nil 'noerror)
+  (setq package-archives 
 	'(("gnu" . "http://elpa.gnu.org/packages/")
 	  ("marmalade" . "http://marmalade-repo.org/packages/")
 	  ("melpa" . "http://melpa.milkbox.net/packages/")))
- 
-(package-initialize)
+  (package-initialize))
  
 ; key mapping
 (global-set-key (kbd "C-x C-b") 'ibuffer)
