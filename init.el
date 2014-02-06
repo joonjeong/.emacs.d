@@ -3,7 +3,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (global-hl-line-mode t)
-(which-function-mode) 
+(which-function-mode 1) 
 (ido-mode t)
 
 (when (require 'package nil 'noerror)
@@ -13,6 +13,10 @@
 	  ("melpa" . "http://melpa.milkbox.net/packages/")))
   (package-initialize))
  
+(when (require 'ggtags nil 'noerror)
+  (add-hook 'c-mode-hook '(lambda () gtags-mode t))
+  (when window-system (speedbar t)))
+
 ; key mapping
 (global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
