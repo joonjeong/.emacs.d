@@ -7,6 +7,7 @@
 (ido-mode t)
 
 ; key mapping
+(global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<f12>") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
  
