@@ -6,13 +6,6 @@
 (which-function-mode) 
 (ido-mode t)
 
-(when (require 'package nil 'noerror)
-  (setq package-archives 
-	'(("gnu" . "http://elpa.gnu.org/packages/")
-	  ("marmalade" . "http://marmalade-repo.org/packages/")
-	  ("melpa" . "http://melpa.milkbox.net/packages/")))
-  (package-initialize))
- 
 ; key mapping
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<f12>") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
@@ -22,3 +15,16 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c b") 'org-iswitchb)
+
+(when (require 'package nil 'noerror)
+  (setq package-archives
+	'(("gnu" . "http://elpa.gnu.org/packages/")
+	  ("marmalade" . "http://marmalade-repo.org/packages/")
+	  ("melpa" . "http://melpa.milkbox.net/packages/")))
+  (package-initialize))
+
+(when (require 'ecb nil 'noerror)
+  (custom-set-variables
+   '(ecb-options-version "2.40"))
+  (custom-set-faces)
+  (ecb-activate))
