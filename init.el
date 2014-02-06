@@ -14,8 +14,23 @@
   (package-initialize))
  
 (when (require 'ggtags nil 'noerror)
-  (add-hook 'c-mode-hook '(lambda () gtags-mode t))
+  (add-hook 'c-mode-hook '(lambda () (gtags-mode t)))
   (when window-system (speedbar t)))
+
+(when (require 'yasnippet nil 'noerror)
+  (yas-global-mode 1))
+
+(when (require 'auto-complete nil 'noerror)
+  (when (require 'auto-complete-config nil 'noerror)
+    (set-default 'ac-sources
+		 '(ac-source-abbrev
+		   ac-source-dictionary
+		   ac-source-yasnippet
+		   ac-source-words-in-buffer
+		   ac-source-words-in-same-mode-buffers
+		   ac-source-semantic))
+    (ac-config-default)
+    (global-auto-complete-mode t)))
 
 ; key mapping
 (global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
