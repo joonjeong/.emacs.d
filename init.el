@@ -24,7 +24,16 @@
   (package-initialize))
 
 (when (require 'ecb nil 'noerror)
+  (ecb-layout-define
+      "development" left nil
+      (ecb-set-methods-buffer)
+      (ecb-split-ver 0.75 t)
+      (other-window 1)
+      (ecb-set-history-buffer)
+      (select-window (next-window)))
+
   (custom-set-variables
+   '(ecb-layout-name "development")
    '(ecb-options-version "2.40"))
   (custom-set-faces)
   (ecb-activate))
