@@ -78,9 +78,11 @@
       
 (setq make-backup-files nil)
 (setq inhibit-splash-screen t)
+(setq indent-tab-mode nil)
+
 (menu-bar-mode -1)
 ;(tool-bar-mode -1)
-;(global-hl-lpine-mode t)
+;(global-hl-line-mode t)
 (which-function-mode 1) 
 ;(ido-mode t)
 
