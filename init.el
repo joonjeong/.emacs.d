@@ -6,11 +6,9 @@
 (use-package auto-complete
   :defer t
   :init (progn
-	  (require 'auto-complete-config)
-	  (require 'auto-complete-c-headers)
-	  (require 'auto-complete-clang)
-	  (require 'auto-complete-clang-async)
-	  (require 'auto-complete-exuberant-ctags)
+	  (use-package auto-complete-config)
+	  (use-package auto-complete-c-headers)
+
 	  (dolist (mode '(emacs-lisp-mode
 			  java-mode
 			  org-mode
@@ -24,20 +22,24 @@
 				       'ac-source-dictionary
 				       'ac-source-features
 				       'ac-source-semantic
+				       'ac-source-semantic-raw
 				       'ac-source-symbols
 				       'ac-source-variables
 				       'ac-source-yasnippet
 				       'ac-source-functions
 				       ))
-	    (defun ac-hook-for-c ()
-		 (add-to-list 'ac-sources 'ac-source-c-headers))
-	    (defun ac-hook-for-c++ ()
-	      (ac-hook-for-c)
-	      (add-to-list 'achead:include-directories '"/usr/include/c++/4.6"))
-	    (add-hook 'c-mode-hook 'ac-hook-for-c)
-	    (add-hook 'c++-mode-hook 'ac-hook-for-c++)
 
-	    (semantic-mode t)
+ 	    (add-hook 'c-mode-hook
+		      (lambda ()
+			(add-to-list 'ac-sources 'ac-source-c-headers)))
+
+	    (add-hook 'c++-mode-hook
+		      (lambda ()
+			(add-to-list 'ac-sources 'ac-source-c-headers)
+			(add-to-list 'achead:include-directories '"/usr/include/c++/4.6")))
+
+	    (semantic-mode 1)
+	    (global-semantic-idle-scheduler-mode 1)
 	    (setq ac-auto-start 2
 		  ac-delay 0.
 		  ac-quick-help-delay 1.
@@ -45,6 +47,21 @@
 		  ac-fuzzy-enable t
 		  tab-always-indent 'complete
 		  ac-dwim t)))
+
+(use-package flymake-google-cpplint
+  :init (progn
+	  (defun lint-initialize ()
+	    (custom-set-variables '(flymake-google-cpplint-command "/usr/local/bin/cpplint"))
+	    (flymake-google-cpplint-load))
+	  (flymake-checkers-mode)
+	  (add-hook 'c-mode-hook 'lint-initialize)
+	  (add-hook 'c++-mode-hook 'lint-initialize)))
+
+(use-package google-c-style
+  :init (progn
+	  (add-hook 'c-mode-common-hook 'google-set-c-style)
+	  (add-hook 'c-mode-common-hook 'google-make-newline-indent)))
+
 
 (use-package helm :init (helm-mode 1))
 (use-package helm-c-yasnippet
@@ -55,6 +72,9 @@
 	      :config (progn
 			(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 			(yas-global-mode 1)))))
+
+
+(define-key global-map (kbd "C-c ;") 'iedit-mode)
       
 (setq make-backup-files nil)
 (setq inhibit-splash-screen t)
