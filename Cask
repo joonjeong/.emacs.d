@@ -10,6 +10,7 @@
 (depends-on "auto-complete-clang")
 (depends-on "auto-complete-clang-async")
 (depends-on "auto-complete-exuberant-ctags")
+(depends-on "cedet")
 (depends-on "flymake")
 (depends-on "flymake-checkers")
 (depends-on "flymake-cppcheck")

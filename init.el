@@ -17,17 +17,14 @@
   :config (progn
 	    (ac-config-default)
 	    (add-to-list 'completion-styles 'initials t)
-	    (add-to-list 'ac-sources '(
-				       'ac-source-abbrev
-				       'ac-source-dictionary
-				       'ac-source-features
-				       'ac-source-semantic
-				       'ac-source-semantic-raw
-				       'ac-source-symbols
-				       'ac-source-variables
-				       'ac-source-yasnippet
-				       'ac-source-functions
-				       ))
+
+	    (add-to-list 'ac-sources 'ac-source-abbrev)
+	    (add-to-list 'ac-sources 'ac-source-dictionary)
+	    (add-to-list 'ac-sources 'ac-source-features)
+	    (add-to-list 'ac-sources 'ac-source-functions)
+	    (add-to-list 'ac-sources 'ac-source-symbols)
+	    (add-to-list 'ac-sources 'ac-source-variables)
+	    (add-to-list 'ac-sources 'ac-source-yasnippet)
 
  	    (add-hook 'c-mode-hook
 		      (lambda ()
@@ -38,8 +35,6 @@
 			(add-to-list 'ac-sources 'ac-source-c-headers)
 			(add-to-list 'achead:include-directories '"/usr/include/c++/4.6")))
 
-	    (semantic-mode 1)
-	    (global-semantic-idle-scheduler-mode 1)
 	    (setq ac-auto-start 2
 		  ac-delay 0.
 		  ac-quick-help-delay 1.
@@ -47,6 +42,15 @@
 		  ac-fuzzy-enable t
 		  tab-always-indent 'complete
 		  ac-dwim t)))
+
+(use-package cedet
+  :init (progn
+	  (add-to-list 'ac-sources 'ac-source-semantic)
+	  (add-to-list 'ac-sources 'ac-source-semantic-raw)
+	  (semantic-mode 1)
+	  (global-semantic-idle-scheduler-mode 1)
+	  
+	  (global-ede-mode 1)))
 
 (use-package flymake-google-cpplint
   :init (progn

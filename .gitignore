@@ -2,3 +2,5 @@ auto-save-list
 elpa
 *.dat
 .cask
+semanticdb
+ede-projects.el
