@@ -16,6 +16,7 @@
 	    (add-to-list 'ac-modes mode)))
   :config (progn
 	    (ac-config-default)
+	    (setq ac-auto-show-menu t)
 	    (add-to-list 'completion-styles 'initials t)
 
 	    (add-to-list 'ac-sources 'ac-source-abbrev)
@@ -33,7 +34,7 @@
 	    (add-hook 'c++-mode-hook
 		      (lambda ()
 			(add-to-list 'ac-sources 'ac-source-c-headers)
-			(add-to-list 'achead:include-directories '"/usr/include/c++/4.6")))
+			(add-to-list 'achead:include-directories '"/usr/include/c++/4.8.2")))
 
 	    (setq ac-auto-start 2
 		  ac-delay 0.
@@ -55,7 +56,7 @@
 (use-package flymake-google-cpplint
   :init (progn
 	  (defun lint-initialize ()
-	    (custom-set-variables '(flymake-google-cpplint-command "/usr/local/bin/cpplint"))
+	    (custom-set-variables '(flymake-google-cpplint-command "/usr/bin/cpplint"))
 	    (flymake-google-cpplint-load))
 	  (flymake-checkers-mode)
 	  (add-hook 'c-mode-hook 'lint-initialize)
