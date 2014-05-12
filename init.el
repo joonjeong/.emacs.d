@@ -54,6 +54,12 @@
 
 	    (global-set-key (kbd "M-RET") 'ac-complete-semantic-raw)))
 
+(use-package function-args
+  :init (fa-config-default)
+  :config (progn
+	    (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+	    (set-default 'semantic-case-fold t)))
+
 (use-package flymake-google-cpplint
   :init (progn
 	  (defun lint-initialize ()
@@ -62,6 +68,12 @@
 	  (flymake-checkers-mode)
 	  (add-hook 'c-mode-hook 'lint-initialize)
 	  (add-hook 'c++-mode-hook 'lint-initialize)))
+
+(use-package ggtags
+  :config (add-hook 'c-mode-common-hook 
+		    (lambda () 
+		      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+			(ggtags-mode 1)))))
 
 (use-package google-c-style
   :init (progn
