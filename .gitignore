@@ -4,3 +4,4 @@ elpa
 .cask
 semanticdb
 ede-projects.el
+tramp
