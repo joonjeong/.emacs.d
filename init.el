@@ -6,10 +6,17 @@
 (use-package auto-complete
   :defer t
   :init (progn
+	  (use-package cedet
+	    :init (progn
+		    (semantic-mode 1)
+		    (global-semantic-idle-scheduler-mode 1)
+		    (global-ede-mode 1)))
 	  (use-package auto-complete-config)
 	  (use-package auto-complete-c-headers)
 
 	  (dolist (mode '(emacs-lisp-mode
+			  c-mode
+			  c++-mode
 			  java-mode
 			  org-mode
 			  python-mode))
@@ -23,6 +30,8 @@
 	    (add-to-list 'ac-sources 'ac-source-dictionary)
 	    (add-to-list 'ac-sources 'ac-source-features)
 	    (add-to-list 'ac-sources 'ac-source-functions)
+	    (add-to-list 'ac-sources 'ac-source-semantic)
+	    (add-to-list 'ac-sources 'ac-source-semantic-raw)
 	    (add-to-list 'ac-sources 'ac-source-symbols)
 	    (add-to-list 'ac-sources 'ac-source-variables)
 	    (add-to-list 'ac-sources 'ac-source-yasnippet)
@@ -42,7 +51,15 @@
 		  ac-use-fuzzy t
 		  ac-fuzzy-enable t
 		  tab-always-indent 'complete
-		  ac-dwim t)))
+		  ac-dwim t)
+
+	    (global-set-key (kbd "M-RET") 'ac-complete-semantic-raw)))
+
+(use-package function-args
+  :init (fa-config-default)
+  :config (progn
+	    (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+	    (set-default 'semantic-case-fold t)))
 
 (use-package cedet
   :init (progn
@@ -61,6 +78,12 @@
 	  (flymake-checkers-mode)
 	  (add-hook 'c-mode-hook 'lint-initialize)
 	  (add-hook 'c++-mode-hook 'lint-initialize)))
+
+(use-package ggtags
+  :config (add-hook 'c-mode-common-hook 
+		    (lambda () 
+		      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+			(ggtags-mode 1)))))
 
 (use-package google-c-style
   :init (progn
