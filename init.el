@@ -6,6 +6,11 @@
 (use-package auto-complete
   :defer t
   :init (progn
+	  (use-package cedet
+	    :init (progn
+		    (semantic-mode 1)
+		    (global-semantic-idle-scheduler-mode 1)
+		    (global-ede-mode 1)))
 	  (use-package auto-complete-config)
 	  (use-package auto-complete-c-headers)
 
@@ -24,6 +29,8 @@
 	    (add-to-list 'ac-sources 'ac-source-dictionary)
 	    (add-to-list 'ac-sources 'ac-source-features)
 	    (add-to-list 'ac-sources 'ac-source-functions)
+	    (add-to-list 'ac-sources 'ac-source-semantic)
+	    (add-to-list 'ac-sources 'ac-source-semantic-raw)
 	    (add-to-list 'ac-sources 'ac-source-symbols)
 	    (add-to-list 'ac-sources 'ac-source-variables)
 	    (add-to-list 'ac-sources 'ac-source-yasnippet)
@@ -43,18 +50,9 @@
 		  ac-use-fuzzy t
 		  ac-fuzzy-enable t
 		  tab-always-indent 'complete
-		  ac-dwim t)))
+		  ac-dwim t)
 
-(use-package cedet
-  :init (progn
-	  (add-to-list 'ac-sources 'ac-source-semantic)
-	  (add-to-list 'ac-sources 'ac-source-semantic-raw)
-	  (semantic-mode 1)
-	  (global-semantic-idle-scheduler-mode 1)
-	  
-	  (global-set-key (kbd "M-RET") 'ac-complete-semantic-raw)
-	  
-	  (global-ede-mode 1)))
+	    (global-set-key (kbd "M-RET") 'ac-complete-semantic-raw)))
 
 (use-package flymake-google-cpplint
   :init (progn
