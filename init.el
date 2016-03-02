@@ -32,7 +32,7 @@
 (use-package centered-window-mode :ensure t :pin melpa)
 (use-package helm-projectile :ensure t :pin melpa)
 (use-package helm-ag :ensure t :pin melpa)
-
+(use-package solarized-theme :ensure t :pin melpa)
 
 (require 'helm-config)
 (helm-mode 1)
@@ -48,3 +48,7 @@
 (helm-projectile-on)
 
 (setenv "EDITOR" "emacsclient")
+
+(load-theme 'solarized-dark t)
+
+(server-mode 1)
