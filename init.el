@@ -18,42 +18,51 @@
 (global-linum-mode)
 (setq linum-format "%4d ")
 
-; packages 
+                                        ; packages 
 (package-initialize)
 (dolist (i '(("elpa" . "http://elpa.gnu.org/packages/")
-	   ("melpa" . "http://melpa.milkbox.net/packages/")
-	   ("marmalade" . "http://marmalade-repo.org/packages/")))
-	   (add-to-list 'package-archives i))
+             ("melpa" . "http://melpa.milkbox.net/packages/")
+             ("marmalade" . "http://marmalade-repo.org/packages/")))
+  (add-to-list 'package-archives i))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/use-package"))
 (load-library "use-package")
 
-(use-package magit :ensure t)
-(use-package markdown-mode :ensure t :pin melpa)
-(use-package helm :ensure t :pin melpa)
 (use-package centered-window-mode :ensure t :pin melpa)
+(use-package ggtags :ensure t :pin melpa)
+(use-package magit :ensure t :pin melpa)
+(use-package markdown-mode :ensure t :pin melpa)
+(use-package minimap :ensure t :pin elpa)
+(use-package neotree :ensure t :pin melpa)
+(use-package helm :ensure t :pin melpa)
 (use-package helm-projectile :ensure t :pin melpa)
 (use-package helm-ag :ensure t :pin melpa)
 (use-package solarized-theme :ensure t :pin melpa)
+(use-package undo-tree :ensure t :pin melpa)
 
 (require 'helm-config)
+
 (helm-mode 1)
+
+(centered-window-mode 1)
+(global-undo-tree-mode)
+
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(setq projectile-indexing-method 'native)
+(setq projectile-enable-caching t)
+(helm-projectile-on)
+
+(semantic-mode 1)
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-x b") 'helm-mini)
-
-(centered-window-mode 1)
-
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-
-(setq projectile-indexing-method 'native)
-(setq projectile-enable-caching t)
-
-(setenv "EDITOR" "emacsclient")
+(global-set-key [f8] 'neotree-toggle)
 
 (load-theme 'solarized-dark t)
 
 (server-mode 1)
+(setenv "EDITOR" "emacsclient")
