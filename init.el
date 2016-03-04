@@ -7,14 +7,16 @@
 
 (prefer-coding-system 'utf-8-unix)
 
+(normal-erase-is-backspace-mode 1)
+
 (column-number-mode t)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;(global-linum-mode)
-;(setq linum-format "%4d ")
+(global-linum-mode)
+(setq linum-format "%4d ")
 
 ; packages 
 (package-initialize)
@@ -46,6 +48,9 @@
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
+
+(setq projectile-indexing-method 'native)
+(setq projectile-enable-caching t)
 
 (setenv "EDITOR" "emacsclient")
 
