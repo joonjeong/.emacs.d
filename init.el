@@ -7,7 +7,7 @@
 
 (prefer-coding-system 'utf-8-unix)
 
-(normal-erase-is-backspace-mode 1)
+; (normal-erase-is-backspace-mode 1)
 
 (column-number-mode t)
 
@@ -66,3 +66,13 @@
 
 (server-mode 1)
 (setenv "EDITOR" "emacsclient")
+
+(defun custom-native-mode-hook ()
+  (setq c-echo-semantic-information-p t)
+  (c-set-offset 'arglist-intro '+)
+  (c-set-offset 'arglist-cont 0)
+  (c-set-offset 'arglist-cont-nonempty 'c-lineup-arglist)
+  (c-set-offset 'arglist-close 0))
+
+(add-hook 'c-mode-hook 'custom-native-mode-hook)
+(add-hook 'c++-mode-hook 'custom-native-mode-hook)
