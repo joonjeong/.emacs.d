@@ -7,7 +7,7 @@
 
 (prefer-coding-system 'utf-8-unix)
 
-; (normal-erase-is-backspace-mode 1)
+(normal-erase-is-backspace-mode 1)
 
 (column-number-mode t)
 
@@ -27,8 +27,16 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/use-package"))
 (load-library "use-package")
 
-(use-package company :ensure t :pin melpa :config (global-company-mode))
-(use-package company-c-headers :ensure t :pin melpa :config (add-to-list 'company-backends 'company-c-headers))
+(use-package company :ensure t :pin melpa
+  :config
+  (global-company-mode)
+  (setq compan-backends (delete 'company-semantic company-backends)))
+(use-package company-c-headers :ensure t :pin melpa
+  :config
+  (add-to-list 'company-backends 'company-c-headers)
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/v1/")
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.8/")
+  (add-to-list 'company-c-headers-path-system "/usr/include/c++/4.9/"))
 (use-package flycheck :ensure t :pin melpa :config (global-flycheck-mode))
 (use-package flycheck-google-cpplint :ensure t :pin melpa
   :config (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append))
