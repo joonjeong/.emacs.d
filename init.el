@@ -18,7 +18,6 @@
 (global-linum-mode)
 (setq linum-format "%4d ")
 
-                                        ; packages 
 (package-initialize)
 (dolist (i '(("elpa" . "http://elpa.gnu.org/packages/")
              ("melpa" . "http://melpa.milkbox.net/packages/")
@@ -28,41 +27,36 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/use-package"))
 (load-library "use-package")
 
-(use-package centered-window-mode :ensure t :pin melpa)
+(use-package flycheck :ensure t :pin melpa :config (global-flycheck-mode))
+(use-package flycheck-google-cpplint :ensure t :pin melpa
+  :config (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append))
 (use-package ggtags :ensure t :pin melpa)
+(use-package google-c-style :ensure t :pin melpa :config (add-hook 'c-mode-common-hook 'google-set-c-style))
 (use-package magit :ensure t :pin melpa)
 (use-package markdown-mode :ensure t :pin melpa)
 (use-package minimap :ensure t :pin elpa)
-(use-package neotree :ensure t :pin melpa)
-(use-package helm :ensure t :pin melpa)
-(use-package helm-projectile :ensure t :pin melpa)
+(use-package neotree :ensure t :pin melpa :bind ([f8] . neotree-toggle))
+(use-package helm :ensure t :pin melpa
+  :config (require 'helm-config) (helm-mode 1)
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-mini)))
+(use-package helm-projectile :ensure t :pin melpa
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (setq projectile-indexing-method 'native)
+  (setq projectile-enable-caching t)
+  (helm-projectile-on))
 (use-package helm-ag :ensure t :pin melpa)
-(use-package solarized-theme :ensure t :pin melpa)
-(use-package undo-tree :ensure t :pin melpa)
-
-(require 'helm-config)
-
-(helm-mode 1)
-
-(centered-window-mode 1)
-(global-undo-tree-mode)
-
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(setq projectile-indexing-method 'native)
-(setq projectile-enable-caching t)
-(helm-projectile-on)
+(use-package solarized-theme :ensure t :pin melpa
+  :config (load-theme 'solarized-dark t))
+(use-package undo-tree :ensure t :pin melpa
+  :config (global-undo-tree-mode))
 
 (semantic-mode 1)
 (global-semanticdb-minor-mode 1)
 (global-semantic-idle-scheduler-mode 1)
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key [f8] 'neotree-toggle)
-
-(load-theme 'solarized-dark t)
 
 (server-mode 1)
 (setenv "EDITOR" "emacsclient")
