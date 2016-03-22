@@ -1,3 +1,4 @@
+
 (setq make-backup-files nil)
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
@@ -20,8 +21,7 @@
 
 (package-initialize)
 (dolist (i '(("elpa" . "http://elpa.gnu.org/packages/")
-             ("melpa" . "http://melpa.milkbox.net/packages/")
-             ("marmalade" . "http://marmalade-repo.org/packages/")))
+             ("melpa" . "http://melpa.milkbox.net/packages/")))
   (add-to-list 'package-archives i))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/use-package"))
@@ -60,7 +60,10 @@
 
 (semantic-mode 1)
 (global-semanticdb-minor-mode 1)
+(global-semantic-idle-summary-mode 1)
 (global-semantic-idle-scheduler-mode 1)
+(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+(use-package stickyfunc-enhance :ensure t :pin melpa)
 
 (server-mode 1)
 (setenv "EDITOR" "emacsclient")
