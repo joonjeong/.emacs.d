@@ -7,7 +7,7 @@
 
 (prefer-coding-system 'utf-8-unix)
 
-(normal-erase-is-backspace-mode 1)
+;(normal-erase-is-backspace-mode 1)
 
 (column-number-mode t)
 
@@ -30,7 +30,10 @@
 (use-package company :ensure t :pin melpa
   :config
   (global-company-mode)
-  (setq compan-backends (delete 'company-semantic company-backends)))
+  (setq compan-backends (delete 'company-semantic company-backends))
+  (global-set-key "\t" 'company-complete-common)
+  (define-key company-active-map [tab] 'company-complete-selection)
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection))
 (use-package company-c-headers :ensure t :pin melpa
   :config
   (add-to-list 'company-backends 'company-c-headers)
@@ -61,8 +64,7 @@
   (setq projectile-enable-caching t)
   (helm-projectile-on))
 (use-package helm-ag :ensure t :pin melpa)
-(use-package solarized-theme :ensure t :pin melpa
-  :config (load-theme 'solarized-dark t))
+;(use-package solarized-theme :ensure t :pin melpa :config (load-theme 'solarized-dark t))
 (use-package undo-tree :ensure t :pin melpa
   :config (global-undo-tree-mode))
 
