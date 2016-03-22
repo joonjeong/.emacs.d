@@ -27,9 +27,13 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/use-package"))
 (load-library "use-package")
 
+(use-package company :ensure t :pin melpa :config (global-company-mode))
+(use-package company-c-headers :ensure t :pin melpa :config (add-to-list 'company-backends 'company-c-headers))
 (use-package flycheck :ensure t :pin melpa :config (global-flycheck-mode))
 (use-package flycheck-google-cpplint :ensure t :pin melpa
   :config (flycheck-add-next-checker 'c/c++-clang 'c/c++-googlelint 'append))
+(use-package flycheck-irony :ensure t :pin melpa
+  :config (add-hook 'flycheck-mode-hook 'flycheck-irony-setup))
 (use-package ggtags :ensure t :pin melpa)
 (use-package google-c-style :ensure t :pin melpa :config (add-hook 'c-mode-common-hook 'google-set-c-style))
 (use-package magit :ensure t :pin melpa)
